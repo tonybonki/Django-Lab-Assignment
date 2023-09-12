@@ -1,7 +1,10 @@
-<!-- index.html -->
-<html>
-	<head>Hello World</head>
-	<body>
-		<p>Hello world</p>
-	</body>
-</html>
+{% extends 'base.html' %} {% block title %}Hello world{% endblock %} 
+{% block content %}
+<h1>Fruits</h1>
+<ul>
+  {% for product in products %}
+  <li>{{ product }}</li>
+  {% endfor %}
+</ul>
+<!-- content specific to the homepage goes here --->
+{% endblock %}

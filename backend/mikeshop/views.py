@@ -2,4 +2,6 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'index.html')
+    products = ['apple','banana','grapes']
+    context = {'products': products}
+    return render(request, 'index.html', context)
