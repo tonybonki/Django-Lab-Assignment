@@ -1,5 +1,3 @@
-
-
 import {
   Box,
   Center,
@@ -10,10 +8,31 @@ import {
   Image,
 } from "@chakra-ui/react";
 
+// Import React State
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 const IMAGE =
   "https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80";
 
 export default function ProductSimple() {
+  // Store the data that is fetched from Django API
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Url for my Django API endpoint
+    const apiUrl = "http://127.0.0.1:8000/api/items/";
+
+    // Make a GET request using Axios
+    axios.get(apiUrl)
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   return (
     <Center py={12}>
       <Box
@@ -74,6 +93,12 @@ export default function ProductSimple() {
               $199
             </Text>
           </Stack>
+          <h1>Data from Django API</h1>
+          <ul>
+            {data.map((item) => (
+              <li key={item.id}>{item.name}</li>
+            ))}
+          </ul>
         </Stack>
       </Box>
     </Center>
