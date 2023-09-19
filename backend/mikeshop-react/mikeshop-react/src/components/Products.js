@@ -21,16 +21,11 @@ export default function ProductSimple() {
 
   useEffect(() => {
     // Url for my Django API endpoint
-    const apiUrl = "http://127.0.0.1:8000/api/items/";
 
     // Make a GET request using Axios
-    axios.get(apiUrl)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    fetch("http://127.0.0.1:8000/api/items/")
+      .then((response) => response.json())
+      .then((data) => setData(data));
   }, []);
 
   return (
@@ -94,11 +89,27 @@ export default function ProductSimple() {
             </Text>
           </Stack>
           <h1>Data from Django API</h1>
-          <ul>
-            {data.map((item) => (
-              <li key={item.id}>{item.name}</li>
-            ))}
-          </ul>
+          {/* Check if data.products is defined before mapping */}
+          {data.products && data.products.length > 0 ? (
+            <ul>
+              {data.products.map((product) => (
+                <li key={product.id}>{product.name}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No products available</p>
+          )}
+
+          {/* Check if data.categories is defined before mapping */}
+          {data.categories && data.categories.length > 0 ? (
+            <ul>
+              {data.categories.map((category) => (
+                <li key={category.id}>{category.name}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No categories available</p>
+          )}
         </Stack>
       </Box>
     </Center>
