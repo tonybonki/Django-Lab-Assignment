@@ -94,7 +94,6 @@ export default function ProductCard() {
               {data.products.map((product) => (
                 <li key={product.id}>
                   {product.name}
-                  {product.image_url}
                   <Image src={`.${product.image_url}`}></Image>
                 </li>
               ))}
