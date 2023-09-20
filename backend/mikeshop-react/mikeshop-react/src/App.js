@@ -1,10 +1,10 @@
 
-import ProductSimple from "./components/Products";
+import ProductCard from "./components/Products";
 function App() {
   return (
     <>
       {" "}
-      <ProductSimple />
+      <ProductCard />
     </>
   );
 }

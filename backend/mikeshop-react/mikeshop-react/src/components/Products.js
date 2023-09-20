@@ -10,12 +10,11 @@ import {
 
 // Import React State
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 const IMAGE =
   "https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80";
 
-export default function ProductSimple() {
+export default function ProductCard() {
   // Store the data that is fetched from Django API
   const [data, setData] = useState([]);
 
@@ -93,7 +92,11 @@ export default function ProductSimple() {
           {data.products && data.products.length > 0 ? (
             <ul>
               {data.products.map((product) => (
-                <li key={product.id}>{product.name}</li>
+                <li key={product.id}>
+                  {product.name}
+                  {product.image_url}
+                  <Image src={`.${product.image_url}`}></Image>
+                </li>
               ))}
             </ul>
           ) : (

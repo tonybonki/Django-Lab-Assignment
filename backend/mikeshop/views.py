@@ -19,13 +19,22 @@ def index(request):
 
     products = Product.objects.all()
     products_list = [
-        {"id": product.id, "name": product.name}
+        {
+         "id": product.id,
+         "name": product.name,
+         'price': product.price,
+         'description': product.description,
+         'image_url': product.product_image.url,
+         }
+         
         for product in products
+        
     ]
 
     data = {
         "products": products_list,
 
     }
+ 
     # Return the combined data as a JSON response
     return JsonResponse(data, status=status.HTTP_200_OK)
