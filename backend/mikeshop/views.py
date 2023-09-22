@@ -38,3 +38,6 @@ def index(request):
  
     # Return the combined data as a JSON response
     return JsonResponse(data, status=status.HTTP_200_OK)
+
+def homePage(request):
+    return render(request, 'index.html')
