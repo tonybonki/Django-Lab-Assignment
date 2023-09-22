@@ -55,3 +55,12 @@ def all_products(request):
     }
 
     return render(request, 'products.html', context)
+
+def individual_product(request, prodid):
+
+    product = Product.objects.get(id=prodid)
+    context = {
+        'product':product,
+    }
+
+    return render(request, 'product_detail.html', context)

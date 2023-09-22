@@ -6,6 +6,7 @@
   {% for product in products %}
   <li>This {{ product.name }} sells for {{product.price}}€</li>
   <p>{{product.description}}</p>
+  <a href="/product_detail/{{product.id}}/">View</a>
   <img height="50" src="{{ MEDIA_URL }}{{product.product_image.url}}" alt="{{product.name}}">
   {% endfor %}
 </ul>
