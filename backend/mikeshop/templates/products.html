@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Products</h1>
+<p>This is the homepage for my website.</p>
+<ul>
+  {% for product in products %}
+  <li>This {{ product.name }} sells for {{product.price}}€</li>
+  <p>{{product.description}}</p>
+  <img height="50" src="{{ MEDIA_URL }}{{product.product_image.url}}" alt="{{product.name}}">
+  {% endfor %}
+</ul>
+{% endblock content %} 

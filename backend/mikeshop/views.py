@@ -39,9 +39,19 @@ def index(request):
     # Return the combined data as a JSON response
     return JsonResponse(data, status=status.HTTP_200_OK)
 
+# Django Website Views
 def homePage(request):
-    products=['apple','banana','grapes']
+    fruits =['apple','banana','grapes']
     context = {
-        'products':products,
+        'fruits':fruits,
     }
     return render(request, 'index.html', context)
+
+def all_products(request):
+    
+
+    context = {
+        'products': Product.objects.all(),
+    }
+
+    return render(request, 'products.html', context)
