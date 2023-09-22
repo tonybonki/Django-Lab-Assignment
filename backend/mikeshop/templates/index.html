@@ -2,4 +2,9 @@
 {% block content %}
 <h1>Homepage</h1>
 <p>This is the homepage for my website.</p>
+<ul>
+  {% for product in products %}
+  <li>{{ product }}</li>
+  {% endfor %}
+</ul>
 {% endblock content %}

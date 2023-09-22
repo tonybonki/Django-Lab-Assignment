@@ -40,4 +40,8 @@ def index(request):
     return JsonResponse(data, status=status.HTTP_200_OK)
 
 def homePage(request):
-    return render(request, 'index.html')
+    products=['apple','banana','grapes']
+    context = {
+        'products':products,
+    }
+    return render(request, 'index.html', context)
