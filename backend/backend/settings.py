@@ -18,6 +18,9 @@ import os
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/" # redirect to homepage after login
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
