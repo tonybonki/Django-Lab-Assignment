@@ -5,9 +5,11 @@
 {% endblock %}
 
 {%  block content %}
-    <form action="." method="POST">
+    <form class="mx-auto" style="width: 30rem;" action="." method="POST">
     {% csrf_token %}
     {{ form.as_table }}
     <button type="submit">SUBMIT</button>
     </form>
+    
 {%  endblock %}
+
