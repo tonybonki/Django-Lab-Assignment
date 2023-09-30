@@ -46,15 +46,9 @@ def index(request):
 
 # Django Website Views
 def homePage(request):
-    fruits =['apple','banana','grapes']
-    context = {
-        'fruits':fruits,
-    }
-    return render(request, 'index.html', context)
+    return render(request, 'index.html')
 
 def all_products(request):
-    
-
     context = {
         'products': Product.objects.all(),
     }

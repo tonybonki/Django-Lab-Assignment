@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% block title %} {{product.name}} {% endblock %}
 
 
@@ -5,11 +6,16 @@
 {% if added %}
     <h1> Added to basket</h1>
 {% endif %}
-<h1>Name: {{product.name}} - €{{product.price}}</h1>
-<img height="50" src="{{product.product_image.url}}" />
-<p>
-    {{product.description}}
-    <a href="/addbasket/{{product.id}}" class="btn btn-primary">Buy €{{product.price}}</a>
-</p>
+
+<div class="card mx-auto mt-3" style="width: 18rem;">
+  <img style="margin: 10%;" src="{{product.product_image.url}}" class="carud-img-top" alt="{{product.product_image.url}}">
+  <div class="card-body">
+    <h5 class="card-title">{{product.name}}</h5>
+    <h1>€{{product.price}}</h1>
+    <p class="card-text">{{product.description}}</p>
+    <a href="/addbasket/{{product.id}}" class="btn btn-light">Add to Basket</a>
+    <a href="" class="btn btn-outline">Buy Now</a>
+  </div>
+</div>
 
 {% endblock %}

@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 from .forms import *
 urlpatterns = [
-   path('api/items/', views.index, name='item-list'),
    path('', views.homePage, name='homepage'),
    path('register/', views.UserSignupView.as_view(), name="register"),
    path('products/', views.all_products, name="products"),
