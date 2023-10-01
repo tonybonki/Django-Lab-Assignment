@@ -17,7 +17,8 @@ from rest_framework import status
 
 # Django Website Views
 def homePage(request):
-    return render(request, 'index.html')
+    
+    return render(request, 'base.html')
 
 def all_products(request):
     context = {

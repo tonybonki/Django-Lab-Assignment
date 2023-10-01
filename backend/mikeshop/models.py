@@ -32,6 +32,9 @@ class BasketItem(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 
+    def __str__(self):
+        return f"{self.basket_id} item" 
+
 def price(self):
 	return self.product_id.price * self.quantity
 
