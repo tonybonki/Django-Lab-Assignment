@@ -1,5 +1,5 @@
 # forms.py
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.forms import ModelForm, ModelChoiceField
 from .models import User
@@ -18,9 +18,5 @@ class UserSignupForm(UserCreationForm):
 
 # User Login Form
 
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-class UserLoginForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Your username'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Your password'}))
+class LoginForm(AuthenticationForm):
+    pass

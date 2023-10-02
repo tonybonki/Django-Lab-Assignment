@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from .forms import *
@@ -17,8 +17,8 @@ from rest_framework import status
 
 # Django Website Views
 def homePage(request):
-    
-    return render(request, 'base.html')
+    user = request.user
+    return render(request, 'base.html', {'user': user})
 
 def all_products(request):
     context = {
@@ -51,8 +51,12 @@ class UserSignupView(CreateView):
 
 # Login View
 
-class UserLoginView(LoginView):
-    template_name='login.html'
+class login_view(LoginView):
+    template_name = 'login.html'
+    form_class = LoginForm
+
+
+
 
 def logout_user(request):
     logout(request)
