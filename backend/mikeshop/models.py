@@ -21,7 +21,11 @@ class Basket(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
-
+    
+    @property
+    def total_quantity(self):
+        # Calculates the total quantity by summing up the quantities of related BasketItems
+        return sum(item.quantity for item in self.basketitem_set.all())
     def __str__(self):
         return f"{self.user_id}'s Basket" 
 

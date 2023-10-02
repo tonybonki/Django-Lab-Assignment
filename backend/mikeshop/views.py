@@ -18,20 +18,29 @@ from rest_framework import status
 # Django Website Views
 def homePage(request):
     user = request.user
-    return render(request, 'base.html', {'user': user})
+    context = {
+        'user': user,
+        'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
+    }
+    return render(request, 'base.html', context)
 
 def all_products(request):
+    user = request.user
     context = {
         'products': Product.objects.all(),
+        'user': user,
+        'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
     }
 
     return render(request, 'products.html', context)
 
 def individual_product(request, prodid):
-
+    user = request.user
     product = Product.objects.get(id=prodid)
     context = {
         'product':product,
+        'user': user,
+        'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
     }
 
     return render(request, 'product_detail.html', context)
@@ -100,15 +109,15 @@ def show_basket(request):
     basket = Basket.objects.filter(user_id=user, is_active=True).first()
     if basket is None:
         #TODO: Show basket empty
-        return render(request, 'basket.html', {'empty':True})
+        return render(request, 'basket.html', {'empty':True, 'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity})
     else:
         sbi = BasketItem.objects.filter(basket_id=basket)
         # is this list empty ? 
         if sbi.exists():
             # normal flow
-            return render(request, 'basket.html', {'basket':basket, 'sbi':sbi})
+            return render(request, 'basket.html', {'basket':basket, 'sbi':sbi, 'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity})
         else:
-            return render(request, 'basket.html', {'empty':True})
+            return render(request, 'basket.html', {'empty':True, 'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity})
 
 # Remove item from basket
 
