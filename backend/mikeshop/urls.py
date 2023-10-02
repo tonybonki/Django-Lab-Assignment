@@ -8,5 +8,7 @@ urlpatterns = [
    path('product_detail/<int:prodid>/', views.individual_product, name="individual_product"),
    path('login/',views.login_view.as_view(), name='login'),
    path('logout/', views.logout_user, name="logout"),
+   path('basket/', views.show_basket, name="show_basket"),
+   path('remove_item/<int:sbi>/', views.remove_item, name='remove_item'),
    path('addbasket/<int:prodid>', views.add_to_basket, name="add_basket"),
 ] 

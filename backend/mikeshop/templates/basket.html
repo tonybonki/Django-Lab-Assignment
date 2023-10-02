@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Basket{% endblock %}
+
+
+{% block content %}
+
+{% if empty %}
+    <h2 class="text-center" style="height: 80vh; margin-top: 10%;">Your shopping basket is empty</h2>
+{% else %}
+ <h1>Your Shopping Basket</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in sbi %}
+            <tr>
+                <td>{{ item.product_id.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.item_price }}</td>
+                <td>
+                    <form method="POST" action="{% url 'remove_item' item.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+
+{% endblock %}

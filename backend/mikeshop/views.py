@@ -87,3 +87,44 @@ def add_to_basket(request, prodid):
         sbi.quantity = sbi.quantity+1
         sbi.save()
     return redirect("/products")
+
+# Show Basket
+
+@login_required
+def show_basket(request):
+    # get the user object
+    # does a shopping basket exist ? -> your basket is empty
+    # load all shopping basket items
+    # display on page 
+    user = request.user
+    basket = Basket.objects.filter(user_id=user, is_active=True).first()
+    if basket is None:
+        #TODO: Show basket empty
+        return render(request, 'basket.html', {'empty':True})
+    else:
+        sbi = BasketItem.objects.filter(basket_id=basket)
+        # is this list empty ? 
+        if sbi.exists():
+            # normal flow
+            return render(request, 'basket.html', {'basket':basket, 'sbi':sbi})
+        else:
+            return render(request, 'basket.html', {'empty':True})
+
+# Remove item from basket
+
+@login_required
+def remove_item(request, sbi):
+    if request.method == 'POST':
+        try:
+            basket_item = BasketItem.objects.get(id=sbi)
+            
+            if basket_item.quantity > 1:
+                basket_item.quantity -= 1
+                basket_item.save()
+            else:
+                basket_item.delete()
+
+        except BasketItem.DoesNotExist:
+            return redirect('/basket')
+
+    return redirect('/basket')
