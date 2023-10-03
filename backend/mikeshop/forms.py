@@ -16,6 +16,16 @@ class UserSignupForm(UserCreationForm):
         user.save()
         return user
 
+# Order Form
+
+from .models import *
+
+class OrderForm(ModelForm):
+    shipping_addr = forms.CharField(label="Shipping Address",widget=forms.TextInput(attrs={'class': "aesthetic-windows-95-text-input", 'placeholder': 'Shipping address', 'id': 'ship-addr'}))
+    class Meta:
+        model = Order
+        fields = ['shipping_addr']
+
 # User Login Form
 
 class LoginForm(AuthenticationForm):

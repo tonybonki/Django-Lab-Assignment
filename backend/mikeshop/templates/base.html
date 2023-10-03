@@ -35,6 +35,8 @@
                                 {% endif %}           
                                 <!-- If the User is logged in display -->                  
                                   {% if user.is_authenticated %}
+                                    <li><a class="dropdown-item" href='/orderhistory'>Order History</a></li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="/logout">Logout</a></li>
                                   {% endif %}
                               </ul>

@@ -27,6 +27,7 @@
                 <td>
                     <form method="POST" action="{% url 'remove_item' item.id %}">
                         {% csrf_token %}
+                        <a href = "/order/" class="btn btn-primary">Order</a>
                         <button type="submit">Remove</button>
                     </form>
                 </td>

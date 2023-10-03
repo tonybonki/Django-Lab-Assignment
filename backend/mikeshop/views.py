@@ -18,9 +18,15 @@ from rest_framework import status
 # Django Website Views
 def homePage(request):
     user = request.user
+    # If a Basket object exists then caldulate the basket quantity and return its value in the context
+    if Basket.objects.filter(user_id=user, is_active=True):
+        basket_quantity = Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
+    else:
+    # If not the basket has 0 items 
+        basket_quantity = 0
     context = {
         'user': user,
-        'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
+        'basket_quantity': basket_quantity
     }
     return render(request, 'base.html', context)
 
@@ -93,7 +99,7 @@ def add_to_basket(request, prodid):
     else:
         # a basket item already exists 
         # just add 1 to the quantity
-        sbi.quantity = sbi.quantity+1
+        sbi.item_quantity = sbi.item_quantity+1
         sbi.save()
     return redirect("/products")
 
@@ -137,3 +143,46 @@ def remove_item(request, sbi):
             return redirect('/basket')
 
     return redirect('/basket')
+
+# Order View
+
+@login_required
+def order(request):
+    # load in all data we need, user, basket, items
+    user = request.user
+    basket = Basket.objects.filter(user_id=user, is_active=True).first()
+    if basket is None:
+        return redirect("/")
+    sbi = BasketItem.objects.filter(basket_id=basket)
+    if not sbi.exists(): # if there are no items
+        return redirect("/")
+    # POST or GET
+    if request.method == "POST":
+        # check if valid
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user_id = user
+            order.basket_id = basket
+            total = 0.0
+            for item in sbi:
+                total += float(item.item_price())
+            order.total_price = total
+            order.save()
+            basket.is_active = False
+            basket.save()
+            return render(request, 'ordercomplete.html', {'order':order, 'basket':basket, 'sbi':sbi})
+        else:
+            return render(request, 'orderform.html', {'form':form, 'basket':basket, 'sbi':sbi})
+    else:
+        # show the form
+        form = OrderForm()
+        return render(request, 'orderform.html', {'form':form, 'basket':basket, 'sbi':sbi})
+
+#  Previous Orders View
+
+@login_required
+def previous_orders(request):
+    user = request.user
+    orders = Order.objects.filter(user_id=user)
+    return render(request, 'previous_orders.html', {'orders':orders})

@@ -25,7 +25,7 @@ class Basket(models.Model):
     @property
     def total_quantity(self):
         # Calculates the total quantity by summing up the quantities of related BasketItems
-        return sum(item.quantity for item in self.basketitem_set.all())
+        return sum(item.item_quantity for item in self.basketitem_set.all())
     def __str__(self):
         return f"{self.user_id}'s Basket" 
 
@@ -33,7 +33,10 @@ class BasketItem(models.Model):
     id = models.AutoField(primary_key=True)
     basket_id = models.ForeignKey(Basket, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
+    item_quantity = models.IntegerField(default=1)
+
+    def item_price(self):
+	    return self.product_id.price * self.item_quantity
 
     def __str__(self):
         return f"{self.basket_id} item" 
@@ -47,3 +50,4 @@ class Order(models.Model):
     basket_id = models.ForeignKey(Basket, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     total_price = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    shipping_addr = models.TextField(default="")
