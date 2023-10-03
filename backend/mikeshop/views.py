@@ -32,10 +32,16 @@ def homePage(request):
 
 def all_products(request):
     user = request.user
+    # If a Basket object exists then caldulate the basket quantity and return its value in the context
+    if Basket.objects.filter(user_id=user, is_active=True):
+        basket_quantity = Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
+    else:
+    # If not the basket has 0 items 
+        basket_quantity = 0
     context = {
         'products': Product.objects.all(),
         'user': user,
-        'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
+        'basket_quantity': basket_quantity
     }
 
     return render(request, 'products.html', context)
@@ -43,10 +49,16 @@ def all_products(request):
 def individual_product(request, prodid):
     user = request.user
     product = Product.objects.get(id=prodid)
+    # If a Basket object exists then caldulate the basket quantity and return its value in the context
+    if Basket.objects.filter(user_id=user, is_active=True):
+        basket_quantity = Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
+    else:
+    # If not the basket has 0 items 
+        basket_quantity = 0
     context = {
         'product':product,
         'user': user,
-        'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
+        'basket_quantity': basket_quantity
     }
 
     return render(request, 'product_detail.html', context)
@@ -112,10 +124,16 @@ def show_basket(request):
     # load all shopping basket items
     # display on page 
     user = request.user
+    # If a Basket object exists then caldulate the basket quantity and return its value in the context
+    if Basket.objects.filter(user_id=user, is_active=True):
+        basket_quantity = Basket.objects.filter(user_id=user, is_active=True).first().total_quantity
+    else:
+    # If not the basket has 0 items 
+        basket_quantity = 0
     basket = Basket.objects.filter(user_id=user, is_active=True).first()
     if basket is None:
         #TODO: Show basket empty
-        return render(request, 'basket.html', {'empty':True, 'basket_quantity': Basket.objects.filter(user_id=user, is_active=True).first().total_quantity})
+        return render(request, 'basket.html', {'empty':True, 'basket_quantity': basket_quantity})
     else:
         sbi = BasketItem.objects.filter(basket_id=basket)
         # is this list empty ? 

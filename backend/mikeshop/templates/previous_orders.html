@@ -6,24 +6,30 @@
 
 
 {% block content %}
-<table>
-    <thead>
-        <tr>
-            <th>Order ID</th>
-            <th>Ordered on</th> 
-            <th>Shipping to</th>
-            <th>Total price</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for ord in orders %}
-            <tr>
+    <div class="container">
+        <h1 class="mb-4">Order History</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Adress</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through your order data here -->
+                {% for ord in orders %}
+                <tr>
                 <td>{{ ord.id }}</td>
                 <td> {{ ord.date_ordered }}</td>
                 <td> {{ ord.shipping_addr  }}</td>
-                <td> {{ord.total_price }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                <td> € {{ord.total_price }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
 {% endblock %}
